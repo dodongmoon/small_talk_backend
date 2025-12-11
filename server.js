@@ -10,8 +10,22 @@ const port = process.env.PORT || 3000;
 
 app.use(cors({
     origin: true,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.options('*', cors()); // Enable pre-flight for all routes
+
+// Request logging middleware
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
+app.get('/', (req, res) => {
+    res.send('Small Talk Backend is running!');
+});
 app.use(express.json());
 
 const API_KEY = process.env.GEMINI_API_KEY;
