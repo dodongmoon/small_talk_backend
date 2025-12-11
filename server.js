@@ -31,8 +31,8 @@ app.use(express.json());
 const API_KEY = process.env.GEMINI_API_KEY;
 
 if (!API_KEY) {
-    console.error('Error: GEMINI_API_KEY is not set in environment variables.');
-    process.exit(1);
+    console.error('Warning: GEMINI_API_KEY is not set. Chat features will fail.');
+    // process.exit(1); // Don't crash, just log warning
 }
 
 const genAI = new GoogleGenerativeAI(API_KEY);
